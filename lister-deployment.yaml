@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lister
+  labels:
+    name: lister
+spec:
+  selector:
+    matchLabels:
+      name: lister
+  template:
+    metadata:
+      labels:
+        name: lister
+    spec:
+      serviceAccountName: nublado-prepuller
+      containers:
+        - name: lister
+          imagePullPolicy: "Always"
+          image: "lsstsqre/lister:latest"
+          command:
+            - tail
+            - -f
+            - /dev/null
+          securityContext:
+            runAsUser: 769
+            runAsGroup: 769
